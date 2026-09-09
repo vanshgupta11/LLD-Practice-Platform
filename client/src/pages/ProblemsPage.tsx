@@ -54,6 +54,17 @@ export const ProblemsPage: React.FC = () => {
     }
   };
 
+  const getDifficultyBadge = (difficulty: DifficultyLevel) => {
+    switch (difficulty) {
+      case "EASY":
+        return "bg-emerald-950/40 border-emerald-900/40 text-zinc-300";
+      case "MEDIUM":
+        return "bg-amber-950/40 border-amber-900/40 text-zinc-300";
+      case "HARD":
+        return "bg-rose-950/40 border-rose-900/40 text-zinc-300";
+    }
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
       {/* Editorial Vercel-Style Header */}
@@ -135,7 +146,7 @@ export const ProblemsPage: React.FC = () => {
 
                 {/* Difficulty (2 cols) */}
                 <div className="md:col-span-2 flex items-center pl-6 md:pl-0">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono text-zinc-300 border border-white/10 bg-white/[0.03]">
+                  <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono border ${getDifficultyBadge(problem.difficulty)}`}>
                     {problem.difficulty}
                   </span>
                 </div>

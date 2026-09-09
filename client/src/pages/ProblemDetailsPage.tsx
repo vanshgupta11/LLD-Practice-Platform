@@ -56,8 +56,15 @@ export const ProblemDetailsPage: React.FC = () => {
     }
   };
 
-  const getDifficultyBadge = (_difficulty: DifficultyLevel) => {
-    return "text-zinc-300 bg-white/[0.03] border-white/10";
+  const getDifficultyBadge = (difficulty: DifficultyLevel) => {
+    switch (difficulty) {
+      case "EASY":
+        return "bg-emerald-950/40 border-emerald-900/40 text-zinc-300";
+      case "MEDIUM":
+        return "bg-amber-950/40 border-amber-900/40 text-zinc-300";
+      case "HARD":
+        return "bg-rose-950/40 border-rose-900/40 text-zinc-300";
+    }
   };
 
   const getEstimatedTime = (difficulty: DifficultyLevel) => {

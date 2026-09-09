@@ -110,24 +110,24 @@ export const ProblemsPage: React.FC = () => {
         </div>
       )}
 
-      {/* Problems List View */}
+      {/* Problems List View with margin/spacing */}
       {!loading && !error && problems.length > 0 && (
-        <div className="border border-white/10 rounded-lg bg-[#0a0a0a] divide-y divide-white/10 overflow-hidden shadow-2xl shadow-black/50">
-          {/* List Header Bar */}
-          <div className="hidden md:grid md:grid-cols-12 px-6 py-3 bg-white/[0.02] text-[11px] font-mono uppercase tracking-wider text-zinc-500">
+        <div className="space-y-4">
+          {/* Optional Column Headers for large screens */}
+          <div className="hidden md:grid md:grid-cols-12 px-6 py-2 text-[11px] font-mono uppercase tracking-wider text-zinc-500">
             <div className="col-span-6">Problem</div>
             <div className="col-span-2">Difficulty</div>
             <div className="col-span-2">Structure</div>
             <div className="col-span-2 text-right">Action</div>
           </div>
 
-          {/* List Problem Rows */}
-          <div className="divide-y divide-white/5">
+          {/* Spaced Problem List Items */}
+          <div className="space-y-3">
             {problems.map((problem, index) => (
               <div
                 key={problem.id}
                 onClick={() => navigate(`/problems/${problem.id}`)}
-                className="group cursor-pointer p-5 sm:px-6 sm:py-5 hover:bg-white/[0.02] transition-colors flex flex-col md:grid md:grid-cols-12 md:items-center gap-4"
+                className="group cursor-pointer bg-[#0a0a0a] border border-white/10 hover:border-white/20 rounded-lg p-5 sm:px-6 sm:py-4.5 transition-all duration-150 flex flex-col md:grid md:grid-cols-12 md:items-center gap-4 hover:bg-[#0e0e0e] shadow-sm"
               >
                 {/* Problem Info (6 cols) */}
                 <div className="md:col-span-6 space-y-1.5 pr-0 md:pr-4">

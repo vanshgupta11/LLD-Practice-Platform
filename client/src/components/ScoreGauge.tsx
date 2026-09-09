@@ -12,10 +12,10 @@ export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
   const percentage = Math.min(100, Math.max(0, Math.round((score / maxScore) * 100)));
 
   const getTier = (pct: number) => {
-    if (pct >= 85) return { label: "Exemplary", text: "text-emerald-400" };
-    if (pct >= 70) return { label: "Proficient", text: "text-white" };
-    if (pct >= 50) return { label: "Needs Attention", text: "text-amber-400" };
-    return { label: "Critical Gaps", text: "text-rose-400" };
+    if (pct >= 85) return { label: "Exemplary", text: "text-zinc-300" };
+    if (pct >= 70) return { label: "Proficient", text: "text-zinc-400" };
+    if (pct >= 50) return { label: "Needs Attention", text: "text-zinc-400" };
+    return { label: "Critical Gaps", text: "text-zinc-500" };
   };
 
   const tier = getTier(percentage);

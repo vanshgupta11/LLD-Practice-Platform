@@ -12,36 +12,36 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = "md" })
       case "IN_PROGRESS":
         return {
           dotClass: "bg-zinc-400",
-          textClass: "text-zinc-300",
-          borderClass: "border-white/10 bg-white/[0.03]",
+          textClass: "text-zinc-400",
+          borderClass: "border-white/10 bg-white/[0.02]",
           label: "In Progress",
         };
       case "SUBMITTED":
         return {
-          dotClass: "bg-amber-400",
-          textClass: "text-amber-300",
-          borderClass: "border-amber-500/20 bg-amber-500/[0.08]",
+          dotClass: "bg-zinc-300",
+          textClass: "text-zinc-300",
+          borderClass: "border-white/10 bg-white/[0.03]",
           label: "Submitted",
         };
       case "EVALUATING":
         return {
-          dotClass: "bg-blue-400 animate-pulse",
-          textClass: "text-blue-300",
-          borderClass: "border-blue-500/20 bg-blue-500/[0.08]",
+          dotClass: "bg-white animate-pulse",
+          textClass: "text-zinc-200",
+          borderClass: "border-white/15 bg-white/[0.04]",
           label: "Evaluating...",
         };
       case "COMPLETED":
         return {
-          dotClass: "bg-emerald-400",
-          textClass: "text-emerald-300",
-          borderClass: "border-emerald-500/20 bg-emerald-500/[0.08]",
+          dotClass: "bg-zinc-300",
+          textClass: "text-zinc-200",
+          borderClass: "border-white/10 bg-white/[0.03]",
           label: "Completed",
         };
       case "FAILED":
         return {
-          dotClass: "bg-rose-400",
-          textClass: "text-rose-300",
-          borderClass: "border-rose-500/20 bg-rose-500/[0.08]",
+          dotClass: "bg-zinc-500",
+          textClass: "text-zinc-400",
+          borderClass: "border-white/10 bg-white/[0.02]",
           label: "Failed",
         };
     }
@@ -62,3 +62,4 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = "md" })
     </span>
   );
 };
+

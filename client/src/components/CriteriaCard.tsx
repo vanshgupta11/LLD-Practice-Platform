@@ -8,12 +8,6 @@ interface CriteriaCardProps {
 export const CriteriaCard: React.FC<CriteriaCardProps> = ({ result }) => {
   const percentage = Math.round((result.score / result.maxScore) * 100);
 
-  const getScoreColor = (pct: number) => {
-    if (pct >= 80) return "text-emerald-400";
-    if (pct >= 60) return "text-white";
-    return "text-rose-400";
-  };
-
   const formatConfidence = (conf?: number) => {
     if (conf === undefined) return null;
     if (conf >= 0.85) return "High";
@@ -35,7 +29,7 @@ export const CriteriaCard: React.FC<CriteriaCardProps> = ({ result }) => {
         </div>
 
         <div className="text-right shrink-0">
-          <span className={`text-base font-mono font-semibold ${getScoreColor(percentage)}`}>
+          <span className="text-base font-mono font-semibold text-white">
             {result.score}
           </span>
           <span className="text-xs font-mono text-zinc-500">
@@ -48,8 +42,8 @@ export const CriteriaCard: React.FC<CriteriaCardProps> = ({ result }) => {
       <div className="space-y-3.5 text-sm">
         {/* Evidence */}
         {result.evidence && (
-          <div className="pl-3 border-l-2 border-emerald-500/60 space-y-1">
-            <span className="text-[11px] font-mono font-medium text-emerald-400 uppercase tracking-wider block">
+          <div className="pl-3 border-l-2 border-white/20 space-y-1">
+            <span className="text-[11px] font-mono font-medium text-zinc-400 uppercase tracking-wider block">
               Evidence
             </span>
             <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
@@ -60,8 +54,8 @@ export const CriteriaCard: React.FC<CriteriaCardProps> = ({ result }) => {
 
         {/* Concern */}
         {result.concern ? (
-          <div className="pl-3 border-l-2 border-amber-500/60 space-y-1">
-            <span className="text-[11px] font-mono font-medium text-amber-400 uppercase tracking-wider block">
+          <div className="pl-3 border-l-2 border-white/20 space-y-1">
+            <span className="text-[11px] font-mono font-medium text-zinc-400 uppercase tracking-wider block">
               Concern
             </span>
             <p className="text-zinc-200 text-xs sm:text-sm leading-relaxed">

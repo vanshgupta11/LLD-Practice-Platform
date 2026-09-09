@@ -118,8 +118,8 @@ export const HistoryPage: React.FC = () => {
 
       {/* Error */}
       {error && !loading && (
-        <div className="p-5 bg-rose-500/10 border border-rose-500/20 rounded-lg text-center space-y-3">
-          <p className="text-xs font-mono text-rose-400">{error}</p>
+        <div className="p-5 bg-white/[0.02] border border-white/10 rounded-lg text-center space-y-3">
+          <p className="text-xs font-mono text-zinc-400">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 transition-colors"
@@ -243,7 +243,7 @@ export const HistoryPage: React.FC = () => {
                                   <button
                                     onClick={() => handleRetryEvaluation(attempt.id)}
                                     disabled={isBusy}
-                                    className="px-2.5 py-1 text-xs font-mono text-rose-300 border border-rose-500/30 rounded-md hover:bg-rose-500/10 transition-colors disabled:opacity-50"
+                                    className="px-2.5 py-1 text-xs font-mono text-zinc-300 border border-white/10 rounded-md hover:bg-white/[0.05] transition-colors disabled:opacity-50"
                                   >
                                     Retry eval
                                   </button>
@@ -272,7 +272,7 @@ export const HistoryPage: React.FC = () => {
                               onClick={(e) => handleDeleteAttempt(attempt.id, e)}
                               disabled={isBusy}
                               title="Delete this attempt record"
-                              className="px-2 py-1 text-xs font-mono text-zinc-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-md border border-transparent hover:border-rose-500/20 transition-all disabled:opacity-40"
+                              className="px-2 py-1 text-xs font-mono text-zinc-500 hover:text-zinc-200 hover:bg-white/10 rounded-md border border-transparent hover:border-white/10 transition-all disabled:opacity-40"
                             >
                               {busyId === attempt.id ? "Deleting..." : "Delete"}
                             </button>

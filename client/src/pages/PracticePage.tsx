@@ -317,7 +317,7 @@ export const PracticePage: React.FC = () => {
                   >
                     <span>{tab.label}</span>
                     {tab.filled && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" title="Section has content" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 inline-block" title="Section has content" />
                     )}
                   </button>
                 );
@@ -421,18 +421,18 @@ export const PracticePage: React.FC = () => {
 
           {/* Bottom Action Footer */}
           <div className="border-t border-white/10 bg-[#0a0a0a] px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-            <div className="text-zinc-500 font-mono">
+            <div className="text-zinc-400 font-mono">
               {phase === "submitting" && (
-                <span className="text-amber-400">Saving your solution snapshot...</span>
+                <span className="text-zinc-300">Saving your solution snapshot...</span>
               )}
               {phase === "evaluating" && (
-                <span className="text-blue-400 animate-pulse">Evaluating against rubric criteria...</span>
+                <span className="text-white animate-pulse">Evaluating against rubric criteria...</span>
               )}
               {phase === "failed" && (
-                <span className="text-rose-400">{errorMessage || "Evaluation failed."}</span>
+                <span className="text-zinc-300">{errorMessage || "Evaluation failed."}</span>
               )}
               {phase === "idle" && (
-                <span>Your submission is safely committed when submitted.</span>
+                <span className="text-zinc-500">Your submission is safely committed when submitted.</span>
               )}
             </div>
 

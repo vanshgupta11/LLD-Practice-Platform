@@ -104,7 +104,7 @@ export const FeedbackPage: React.FC = () => {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-rose-400 block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 block">
               Evaluation Interrupted
             </span>
             <h1 className="text-xl font-bold text-white">{problem.title}</h1>
@@ -113,16 +113,16 @@ export const FeedbackPage: React.FC = () => {
           <StatusBadge status={attempt.status} />
         </div>
 
-        <div className="p-6 border border-rose-500/20 bg-rose-500/[0.05] rounded-lg space-y-4">
+        <div className="p-6 border border-white/10 bg-[#0a0a0a] rounded-lg space-y-4">
           <div className="space-y-1">
-            <h2 className="text-sm font-semibold text-rose-400">Evaluation could not be completed</h2>
+            <h2 className="text-sm font-semibold text-white">Evaluation could not be completed</h2>
             <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
               {attempt.errorMessage || "The evaluation request timed out or encountered an unexpected issue. Your submitted code is saved in our database."}
             </p>
           </div>
 
           {retryError && (
-            <div className="p-3 bg-[#0a0a0a] border border-rose-500/30 rounded text-xs font-mono text-rose-300">
+            <div className="p-3 bg-black border border-white/10 rounded text-xs font-mono text-zinc-400">
               {retryError}
             </div>
           )}
@@ -196,7 +196,7 @@ export const FeedbackPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-4 border-b border-white/10 pb-5">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-medium">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-medium">
               Evaluation Complete
             </span>
             <span className="text-xs text-zinc-600">·</span>
@@ -253,7 +253,7 @@ export const FeedbackPage: React.FC = () => {
         {/* Strong Areas */}
         <div className="border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-300">
               Strong Areas ({strongCriteria.length})
             </span>
           </div>
@@ -262,7 +262,7 @@ export const FeedbackPage: React.FC = () => {
               {strongCriteria.map((c) => (
                 <li key={c.criterionKey} className="flex items-baseline justify-between gap-2 border-b border-white/5 pb-1.5 last:border-0 last:pb-0">
                   <span className="text-zinc-200 font-medium">{c.criterionName}</span>
-                  <span className="font-mono text-emerald-400 font-medium">
+                  <span className="font-mono text-white font-medium">
                     {c.score}/{c.maxScore}
                   </span>
                 </li>
@@ -276,7 +276,7 @@ export const FeedbackPage: React.FC = () => {
         {/* Needs Attention */}
         <div className="border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-400">
+            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
               Needs Attention ({attentionCriteria.length})
             </span>
           </div>
@@ -285,14 +285,14 @@ export const FeedbackPage: React.FC = () => {
               {attentionCriteria.map((c) => (
                 <li key={c.criterionKey} className="flex items-baseline justify-between gap-2 border-b border-white/5 pb-1.5 last:border-0 last:pb-0">
                   <span className="text-zinc-200 font-medium">{c.criterionName}</span>
-                  <span className="font-mono text-amber-400 font-medium">
+                  <span className="font-mono text-zinc-300 font-medium">
                     {c.score}/{c.maxScore}
                   </span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-emerald-400">All criteria scored above 75%.</p>
+            <p className="text-xs text-zinc-400">All criteria scored above 75%.</p>
           )}
         </div>
       </div>
@@ -393,7 +393,7 @@ const SubmissionSnapshot: React.FC<SubmissionSnapshotProps> = ({
             <span className="font-mono font-semibold uppercase tracking-wider text-zinc-500 block">
               04 — Implementation Code
             </span>
-            <pre className="font-mono text-xs text-emerald-300 bg-[#0a0a0a] p-3.5 rounded border border-white/10 whitespace-pre-wrap leading-relaxed overflow-x-auto">
+            <pre className="font-mono text-xs text-zinc-200 bg-[#0a0a0a] p-3.5 rounded border border-white/10 whitespace-pre-wrap leading-relaxed overflow-x-auto">
               {submission.code}
             </pre>
           </div>

@@ -1,0 +1,7 @@
+export enum EvaluatorType {
+  DETERMINISTIC = "DETERMINISTIC",
+  LLM = "LLM",
+  COMPOSITE = "COMPOSITE",
+  RULE_BASED = "RULE_BASED",
+  HUMAN = "HUMAN",
+}

@@ -191,9 +191,9 @@ export const FeedbackPage: React.FC = () => {
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10 animate-fade-in">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-4 border-b border-white/10 pb-5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-4 border-b border-white/10 pb-5 animate-slide-up">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-medium">
@@ -216,10 +216,10 @@ export const FeedbackPage: React.FC = () => {
           <button
             onClick={handleTryAgain}
             disabled={retrying}
-            className="px-4 py-2 bg-white hover:bg-zinc-200 text-black text-xs font-medium rounded-md transition-colors disabled:opacity-50 flex items-center gap-1.5"
+            className="px-4 py-2 bg-white hover:bg-zinc-200 text-black text-xs font-medium rounded-md btn-interactive transition-all disabled:opacity-50 flex items-center gap-1.5 group"
           >
             <span>{retrying ? "Starting..." : "Try again"}</span>
-            <span className="font-mono text-sm">&rarr;</span>
+            <span className="font-mono text-sm inline-block transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
           </button>
         </div>
       </div>
@@ -227,7 +227,7 @@ export const FeedbackPage: React.FC = () => {
       {/* Score Overview & Executive Summary */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-2">
         {/* Overall Score */}
-        <div className="md:col-span-4 border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3">
+        <div className="md:col-span-4 border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3 card-hover animate-slide-up delay-1">
           <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 block">
             Overall Score
           </span>
@@ -238,11 +238,11 @@ export const FeedbackPage: React.FC = () => {
         </div>
 
         {/* Executive Summary */}
-        <div className="md:col-span-8 space-y-3">
+        <div className="md:col-span-8 space-y-3 animate-slide-up delay-2">
           <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-zinc-400 block">
             Architectural Synthesis
           </span>
-          <p className="text-sm text-zinc-200 leading-relaxed bg-[#0a0a0a] border border-white/10 rounded-lg p-5">
+          <p className="text-sm text-zinc-200 leading-relaxed bg-[#0a0a0a] border border-white/10 rounded-lg p-5 card-hover">
             {evaluation.summary}
           </p>
         </div>
@@ -251,7 +251,7 @@ export const FeedbackPage: React.FC = () => {
       {/* Strong Areas & Needs Attention Breakdown */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {/* Strong Areas */}
-        <div className="border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3">
+        <div className="border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3 card-hover animate-slide-up delay-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-300">
               Strong Areas ({strongCriteria.length})
@@ -274,7 +274,7 @@ export const FeedbackPage: React.FC = () => {
         </div>
 
         {/* Needs Attention */}
-        <div className="border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3">
+        <div className="border border-white/10 bg-[#0a0a0a] rounded-lg p-5 space-y-3 card-hover animate-slide-up delay-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
               Needs Attention ({attentionCriteria.length})
@@ -298,7 +298,7 @@ export const FeedbackPage: React.FC = () => {
       </div>
 
       {/* Criterion-by-Criterion Detailed Review */}
-      <div className="space-y-4">
+      <div className="space-y-4 animate-slide-up delay-4">
         <div className="flex items-baseline justify-between border-b border-white/10 pb-3">
           <h2 className="text-sm font-mono font-semibold uppercase tracking-wider text-white">
             Criterion-by-Criterion Review
@@ -317,11 +317,13 @@ export const FeedbackPage: React.FC = () => {
 
       {/* Submission Snapshot */}
       {submission && (
-        <SubmissionSnapshot
-          submission={submission}
-          showSnapshot={showSnapshot}
-          onToggle={() => setShowSnapshot(!showSnapshot)}
-        />
+        <div className="animate-slide-up delay-5">
+          <SubmissionSnapshot
+            submission={submission}
+            showSnapshot={showSnapshot}
+            onToggle={() => setShowSnapshot(!showSnapshot)}
+          />
+        </div>
       )}
     </div>
   );

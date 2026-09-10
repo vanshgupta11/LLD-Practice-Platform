@@ -66,9 +66,9 @@ export const ProblemsPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10 animate-fade-in">
       {/* Editorial Vercel-Style Header */}
-      <div className="space-y-3 max-w-3xl">
+      <div className="space-y-3 max-w-3xl animate-slide-up">
         <span className="text-xs font-mono font-medium uppercase tracking-wider text-zinc-500">
           Catalog
         </span>
@@ -82,7 +82,8 @@ export const ProblemsPage: React.FC = () => {
 
       {/* Loading State */}
       {loading && (
-        <div className="py-24 text-center space-y-2">
+        <div className="py-24 text-center space-y-3">
+          <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto" />
           <div className="text-xs font-mono text-zinc-500 animate-pulse">
             Loading problem catalog...
           </div>
@@ -91,11 +92,11 @@ export const ProblemsPage: React.FC = () => {
 
       {/* Error State */}
       {error && !loading && (
-        <div className="p-5 bg-white/[0.02] border border-white/10 rounded-lg text-center space-y-3">
+        <div className="p-5 bg-white/[0.02] border border-white/10 rounded-lg text-center space-y-3 animate-scale-in">
           <p className="text-xs font-mono text-zinc-400">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 transition-colors"
+            className="px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 btn-interactive transition-colors"
           >
             Retry
           </button>
@@ -104,7 +105,7 @@ export const ProblemsPage: React.FC = () => {
 
       {/* Empty State */}
       {!loading && !error && problems.length === 0 && (
-        <div className="text-center py-16 border border-dashed border-white/10 rounded-lg bg-[#0a0a0a]">
+        <div className="text-center py-16 border border-dashed border-white/10 rounded-lg bg-[#0a0a0a] animate-scale-in">
           <h3 className="text-sm font-semibold text-white mb-1">No Problems Available</h3>
           <p className="text-xs text-zinc-400">Please ensure the backend database is seeded.</p>
         </div>
@@ -112,71 +113,74 @@ export const ProblemsPage: React.FC = () => {
 
       {/* Problems List View with margin/spacing */}
       {!loading && !error && problems.length > 0 && (
-        <div className="space-y-4">
-          {/* Optional Column Headers for large screens */}
-          <div className="hidden md:grid md:grid-cols-12 px-6 py-2 text-[11px] font-mono uppercase tracking-wider text-zinc-500">
+        <div className="space-y-3">
+          {/* Structured Column Header Bar */}
+          <div className="hidden md:grid md:grid-cols-12 px-6 py-3 bg-[#0a0a0a] border border-white/10 rounded-lg text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-medium items-center animate-slide-up">
             <div className="col-span-6">Problem</div>
             <div className="col-span-2">Difficulty</div>
             <div className="col-span-2">Structure</div>
             <div className="col-span-2 text-right">Action</div>
           </div>
 
-          {/* Spaced Problem List Items */}
-          <div className="space-y-3">
-            {problems.map((problem, index) => (
-              <div
-                key={problem.id}
-                onClick={() => navigate(`/problems/${problem.id}`)}
-                className="group cursor-pointer bg-[#0a0a0a] border border-white/10 hover:border-white/20 rounded-lg p-5 sm:px-6 sm:py-4.5 transition-all duration-150 flex flex-col md:grid md:grid-cols-12 md:items-center gap-4 hover:bg-[#0e0e0e] shadow-sm"
-              >
-                {/* Problem Info (6 cols) */}
-                <div className="md:col-span-6 space-y-1.5 pr-0 md:pr-4">
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-mono text-xs text-zinc-500 shrink-0">
-                      {String(index + 1).padStart(2, "0")}.
+          {/* Spaced Problem List Items with Staggered Entrance */}
+          <div className="space-y-2.5">
+            {problems.map((problem, index) => {
+              const delayClass = `delay-${Math.min(index + 1, 5)}`;
+              return (
+                <div
+                  key={problem.id}
+                  onClick={() => navigate(`/problems/${problem.id}`)}
+                  className={`group cursor-pointer bg-[#0a0a0a] border border-white/10 card-hover rounded-lg p-5 sm:px-6 sm:py-4.5 flex flex-col md:grid md:grid-cols-12 md:items-center gap-4 animate-slide-up ${delayClass}`}
+                >
+                  {/* Problem Info (6 cols) */}
+                  <div className="md:col-span-6 space-y-1.5 pr-0 md:pr-4">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-mono text-xs text-zinc-500 shrink-0">
+                        {String(index + 1).padStart(2, "0")}.
+                      </span>
+                      <h2 className="text-base font-semibold text-white group-hover:text-zinc-100 transition-colors">
+                        {problem.title}
+                      </h2>
+                    </div>
+                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-2 pl-6">
+                      {problem.description}
+                    </p>
+                  </div>
+
+                  {/* Difficulty (2 cols) */}
+                  <div className="md:col-span-2 flex items-center pl-6 md:pl-0">
+                    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono border transition-colors ${getDifficultyBadge(problem.difficulty)}`}>
+                      {problem.difficulty}
                     </span>
-                    <h2 className="text-base font-semibold text-white group-hover:text-white transition-colors">
-                      {problem.title}
-                    </h2>
                   </div>
-                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-2 pl-6">
-                    {problem.description}
-                  </p>
-                </div>
 
-                {/* Difficulty (2 cols) */}
-                <div className="md:col-span-2 flex items-center pl-6 md:pl-0">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono border ${getDifficultyBadge(problem.difficulty)}`}>
-                    {problem.difficulty}
-                  </span>
-                </div>
+                  {/* Structure / Metadata (2 cols) */}
+                  <div className="md:col-span-2 pl-6 md:pl-0 space-y-0.5 text-xs font-mono text-zinc-400">
+                    <div>{problem.requirements?.length || 0} requirements</div>
+                    <div className="text-[11px] text-zinc-500">
+                      {problem.rubric?.criteria?.length || 5} criteria · {getEstimatedTime(problem.difficulty)}
+                    </div>
+                  </div>
 
-                {/* Structure / Metadata (2 cols) */}
-                <div className="md:col-span-2 pl-6 md:pl-0 space-y-0.5 text-xs font-mono text-zinc-400">
-                  <div>{problem.requirements?.length || 0} requirements</div>
-                  <div className="text-[11px] text-zinc-500">
-                    {problem.rubric?.criteria?.length || 5} criteria · {getEstimatedTime(problem.difficulty)}
+                  {/* Action CTA (2 cols) */}
+                  <div className="md:col-span-2 flex items-center justify-between md:justify-end gap-3 pl-6 md:pl-0 pt-2 md:pt-0 border-t md:border-t-0 border-white/5">
+                    <span className="text-xs font-mono text-zinc-500 md:hidden">
+                      {getEstimatedTime(problem.difficulty)}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={(e) => handleStartPractice(problem.id, e)}
+                      disabled={startingProblemId === problem.id}
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white text-black hover:bg-zinc-200 text-xs font-medium rounded btn-interactive transition-all disabled:opacity-50 shrink-0"
+                    >
+                      <span>{startingProblemId === problem.id ? "Starting..." : "Start practice"}</span>
+                      <span className="font-mono text-sm inline-block transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+                    </button>
                   </div>
                 </div>
-
-                {/* Action CTA (2 cols) */}
-                <div className="md:col-span-2 flex items-center justify-between md:justify-end gap-3 pl-6 md:pl-0 pt-2 md:pt-0 border-t md:border-t-0 border-white/5">
-                  <span className="text-xs font-mono text-zinc-500 md:hidden">
-                    {getEstimatedTime(problem.difficulty)}
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={(e) => handleStartPractice(problem.id, e)}
-                    disabled={startingProblemId === problem.id}
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white text-black hover:bg-zinc-200 text-xs font-medium rounded transition-colors disabled:opacity-50 shrink-0"
-                  >
-                    <span>{startingProblemId === problem.id ? "Starting..." : "Start practice"}</span>
-                    <span className="font-mono text-sm">&rarr;</span>
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

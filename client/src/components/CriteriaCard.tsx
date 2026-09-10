@@ -16,7 +16,7 @@ export const CriteriaCard: React.FC<CriteriaCardProps> = ({ result }) => {
   };
 
   return (
-    <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-5 space-y-4 hover:border-white/20 transition-all duration-150">
+    <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-5 space-y-4 card-hover">
       {/* Header: Criterion Title + Fractional Score */}
       <div className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-3">
         <div>

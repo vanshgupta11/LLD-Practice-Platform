@@ -28,7 +28,7 @@ export const PracticePage: React.FC = () => {
   const [classDesign, setClassDesign] = useState("");
   const [explanation, setExplanation] = useState("");
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState<string>("typescript");
+  const [language, setLanguage] = useState<string>("cpp");
 
   const loadAttempt = useCallback(async () => {
     if (!attemptId) return;
@@ -73,44 +73,64 @@ export const PracticePage: React.FC = () => {
       `4. In-memory data store with thread-safe synchronized locks.`
     );
     setClassDesign(
-      `// High-Level Class & Interface Design\n` +
+      `// High-Level Class & Interface Design (C++)\n` +
       `class ParkingLot {\n` +
-      `  - floors: List<Floor>\n` +
-      `  - allocationStrategy: SpotAllocationStrategy\n` +
-      `  - pricingStrategy: PricingStrategy\n` +
-      `  + parkVehicle(v: Vehicle): Ticket\n` +
-      `  + processExit(ticket: Ticket): Invoice\n` +
-      `}\n\n` +
-      `interface SpotAllocationStrategy {\n` +
-      `  + findSpot(floors: List<Floor>, type: VehicleType): Spot\n` +
-      `}\n\n` +
-      `interface PricingStrategy {\n` +
-      `  + calculateFee(ticket: Ticket, exitTime: Date): number\n` +
-      `}`
+      `  - floors: vector<Floor>\n` +
+      `  - allocationStrategy: unique_ptr<SpotAllocationStrategy>\n` +
+      `  - pricingStrategy: unique_ptr<PricingStrategy>\n` +
+      `  + parkVehicle(Vehicle v): Ticket\n` +
+      `  + processExit(Ticket ticket): Invoice\n` +
+      `};\n\n` +
+      `class SpotAllocationStrategy {\n` +
+      `  + virtual shared_ptr<Spot> findSpot(const vector<Floor>& floors, VehicleType type) = 0;\n` +
+      `};\n\n` +
+      `class PricingStrategy {\n` +
+      `  + virtual double calculateFee(const Ticket& ticket, time_t exitTime) = 0;\n` +
+      `};`
     );
     setExplanation(
       `### Design Rationale & SOLID Analysis\n` +
-      `- **Strategy Pattern**: Spot allocation and fee calculation are decoupled via strategy interfaces to follow Open/Closed Principle.\n` +
+      `- **Strategy Pattern**: Spot allocation and fee calculation are decoupled via pure virtual strategy interfaces to adhere to the Open/Closed Principle.\n` +
       `- **Single Responsibility**: Floor manages spot collections; ParkingLot coordinates orchestration.\n` +
-      `- **Concurrency**: Synchronized locking on spot reservations prevents double-allocation.`
+      `- **Memory & Concurrency**: RAII smart pointers (unique_ptr/shared_ptr) prevent memory leaks; mutex locks ensure thread safety on spot reservations.`
     );
     setCode(
-      `export enum VehicleType { TWO_WHEELER, CAR, TRUCK }\n\n` +
-      `export interface SpotAllocationStrategy {\n` +
-      `  findSpot(floors: Floor[], type: VehicleType): Spot | null;\n` +
-      `}\n\n` +
-      `export class Spot {\n` +
-      `  constructor(public id: string, public floorNumber: number, public type: VehicleType, public isOccupied: boolean = false) {}\n` +
-      `}\n\n` +
-      `export class Floor {\n` +
-      `  constructor(public floorNumber: number, public spots: Spot[]) {}\n` +
-      `}\n\n` +
-      `export class ParkingLot {\n` +
-      `  constructor(\n` +
-      `    private floors: Floor[],\n` +
-      `    private strategy: SpotAllocationStrategy\n` +
-      `  ) {}\n` +
-      `}`
+      `#include <iostream>\n` +
+      `#include <vector>\n` +
+      `#include <memory>\n` +
+      `#include <string>\n` +
+      `#include <mutex>\n\n` +
+      `enum class VehicleType { TWO_WHEELER, CAR, TRUCK };\n\n` +
+      `class Spot {\n` +
+      `public:\n` +
+      `    std::string id;\n` +
+      `    int floorNumber;\n` +
+      `    VehicleType type;\n` +
+      `    bool isOccupied;\n\n` +
+      `    Spot(std::string id, int floor, VehicleType t)\n` +
+      `        : id(id), floorNumber(floor), type(t), isOccupied(false) {}\n` +
+      `};\n\n` +
+      `class Floor {\n` +
+      `public:\n` +
+      `    int floorNumber;\n` +
+      `    std::vector<std::shared_ptr<Spot>> spots;\n\n` +
+      `    Floor(int num, std::vector<std::shared_ptr<Spot>> s)\n` +
+      `        : floorNumber(num), spots(std::move(s)) {}\n` +
+      `};\n\n` +
+      `class SpotAllocationStrategy {\n` +
+      `public:\n` +
+      `    virtual ~SpotAllocationStrategy() = default;\n` +
+      `    virtual std::shared_ptr<Spot> findSpot(const std::vector<Floor>& floors, VehicleType type) = 0;\n` +
+      `};\n\n` +
+      `class ParkingLot {\n` +
+      `private:\n` +
+      `    std::vector<Floor> floors;\n` +
+      `    std::unique_ptr<SpotAllocationStrategy> strategy;\n` +
+      `    std::mutex mtx;\n\n` +
+      `public:\n` +
+      `    ParkingLot(std::vector<Floor> floors, std::unique_ptr<SpotAllocationStrategy> strat)\n` +
+      `        : floors(std::move(floors)), strategy(std::move(strat)) {}\n` +
+      `};`
     );
   };
 
@@ -389,10 +409,10 @@ export const PracticePage: React.FC = () => {
                     disabled={isLocked}
                     className="bg-[#0a0a0a] border border-white/10 text-[11px] text-zinc-300 rounded px-2 py-0.5 font-mono"
                   >
+                    <option value="cpp">C++</option>
                     <option value="typescript">TypeScript</option>
                     <option value="java">Java</option>
                     <option value="python">Python</option>
-                    <option value="cpp">C++</option>
                   </select>
                 </div>
                 <div className="flex-1 rounded-lg overflow-hidden border border-white/10 bg-black">

@@ -104,9 +104,9 @@ export const ProblemDetailsPage: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6 animate-fade-in">
       {/* Breadcrumb Navigation */}
-      <div className="text-xs font-mono text-zinc-500 flex items-center gap-1.5">
+      <div className="text-xs font-mono text-zinc-500 flex items-center gap-1.5 animate-slide-up">
         <Link to="/problems" className="hover:text-white transition-colors">
           Problems
         </Link>
@@ -117,7 +117,7 @@ export const ProblemDetailsPage: React.FC = () => {
       {/* 70% Content / 30% Sidebar Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Main Technical Problem Statement (70% - 8 cols) */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 animate-slide-up delay-1">
           {/* Title Header */}
           <div className="space-y-2 border-b border-white/10 pb-5">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
@@ -184,8 +184,8 @@ export const ProblemDetailsPage: React.FC = () => {
         </div>
 
         {/* Sidebar Attempt Panel (30% - 4 cols) */}
-        <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-20">
-          <div className="border border-white/10 rounded-lg bg-[#0a0a0a] p-5 space-y-5">
+        <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-20 animate-slide-up delay-2">
+          <div className="border border-white/10 rounded-lg bg-[#0a0a0a] p-5 space-y-5 card-hover">
             <div className="space-y-1">
               <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 block">
                 Session Setup
@@ -224,10 +224,10 @@ export const ProblemDetailsPage: React.FC = () => {
             <button
               onClick={handleStartAttempt}
               disabled={starting}
-              className="w-full py-2.5 px-4 bg-white hover:bg-zinc-200 text-black text-xs font-medium rounded-md transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 bg-white hover:bg-zinc-200 text-black text-xs font-medium rounded-md btn-interactive transition-all disabled:opacity-50 flex items-center justify-center gap-2 group"
             >
               <span>{starting ? "Initializing attempt..." : "Start attempt"}</span>
-              <span className="font-mono text-sm">&rarr;</span>
+              <span className="font-mono text-sm inline-block transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
             </button>
 
             <p className="text-[11px] text-zinc-500 leading-normal text-center font-mono">

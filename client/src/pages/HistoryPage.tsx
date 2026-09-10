@@ -84,9 +84,9 @@ export const HistoryPage: React.FC = () => {
   });
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-8">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-white/10 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-white/10 pb-5 animate-slide-up">
         <div className="space-y-1">
           <span className="text-[11px] font-mono font-medium uppercase tracking-wider text-zinc-500">
             Timeline
@@ -101,15 +101,17 @@ export const HistoryPage: React.FC = () => {
 
         <Link
           to="/problems"
-          className="text-xs font-mono text-zinc-400 hover:text-white transition-colors"
+          className="text-xs font-mono text-zinc-400 hover:text-white transition-colors group flex items-center gap-1"
         >
-          Explore problems &rarr;
+          <span>Explore problems</span>
+          <span className="inline-block transition-transform duration-200 group-hover:translate-x-1 font-mono">&rarr;</span>
         </Link>
       </div>
 
       {/* Loading */}
       {loading && (
-        <div className="py-24 text-center">
+        <div className="py-24 text-center space-y-3">
+          <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto" />
           <span className="text-xs font-mono text-zinc-500 animate-pulse">
             Loading timeline...
           </span>
@@ -118,11 +120,11 @@ export const HistoryPage: React.FC = () => {
 
       {/* Error */}
       {error && !loading && (
-        <div className="p-5 bg-white/[0.02] border border-white/10 rounded-lg text-center space-y-3">
+        <div className="p-5 bg-white/[0.02] border border-white/10 rounded-lg text-center space-y-3 animate-scale-in">
           <p className="text-xs font-mono text-zinc-400">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 transition-colors"
+            className="px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 btn-interactive transition-colors"
           >
             Retry
           </button>
@@ -131,14 +133,14 @@ export const HistoryPage: React.FC = () => {
 
       {/* Empty State */}
       {!loading && !error && attempts.length === 0 && (
-        <div className="text-center py-16 border border-dashed border-white/10 rounded-lg bg-[#0a0a0a] space-y-3">
+        <div className="text-center py-16 border border-dashed border-white/10 rounded-lg bg-[#0a0a0a] space-y-3 animate-scale-in">
           <h3 className="text-sm font-semibold text-white">No Attempts Logged Yet</h3>
           <p className="text-xs text-zinc-400 max-w-sm mx-auto">
             Choose a problem from the catalog to practice your first low-level design solution.
           </p>
           <Link
             to="/problems"
-            className="inline-block px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 transition-colors"
+            className="inline-block px-3.5 py-1.5 bg-white text-black text-xs font-medium rounded hover:bg-zinc-200 btn-interactive transition-colors"
           >
             Start practicing
           </Link>
@@ -148,9 +150,10 @@ export const HistoryPage: React.FC = () => {
       {/* Grouped Problem Attempt Lists */}
       {!loading && !error && attempts.length > 0 && (
         <div className="space-y-6">
-          {Object.entries(attemptsByProblem).map(([problemId, pAttempts]) => {
+          {Object.entries(attemptsByProblem).map(([problemId, pAttempts], groupIdx) => {
             const problemTitle = pAttempts[0]?.problem?.title || problemId;
             const difficulty = pAttempts[0]?.problem?.difficulty;
+            const delayClass = `delay-${Math.min(groupIdx + 1, 5)}`;
             
             // Score progression array sorted chronologically (oldest to newest)
             const scoresChronological = [...pAttempts]
@@ -159,7 +162,7 @@ export const HistoryPage: React.FC = () => {
               .map((a) => a.evaluation?.overallScore);
 
             return (
-              <div key={problemId} className="border border-white/10 bg-[#0a0a0a] rounded-lg overflow-hidden">
+              <div key={problemId} className={`border border-white/10 bg-[#0a0a0a] rounded-lg overflow-hidden card-hover animate-slide-up ${delayClass}`}>
                 {/* Problem Group Header */}
                 <div className="px-5 py-3.5 bg-white/[0.02] border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
@@ -177,7 +180,7 @@ export const HistoryPage: React.FC = () => {
                   {scoresChronological.length > 1 && (
                     <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-500">
                       <span>Progression:</span>
-                      <span className="text-white font-medium">
+                      <span className="text-white font-medium font-mono">
                         {scoresChronological.join(" → ")}
                       </span>
                     </div>
@@ -204,7 +207,7 @@ export const HistoryPage: React.FC = () => {
                     return (
                       <div
                         key={attempt.id}
-                        className="px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs hover:bg-white/[0.02] transition-colors"
+                        className="px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs hover:bg-white/[0.02] transition-colors group/row"
                       >
                         <div className="flex items-center gap-4">
                           <span className="font-mono font-medium text-white w-20">
@@ -231,7 +234,7 @@ export const HistoryPage: React.FC = () => {
                             {isCompleted && (
                               <button
                                 onClick={() => navigate(`/feedback/${attempt.id}`)}
-                                className="px-2.5 py-1 text-xs font-medium text-zinc-300 hover:text-white border border-white/10 rounded-md bg-white/[0.03] hover:bg-white/[0.08] transition-colors"
+                                className="px-2.5 py-1 text-xs font-medium text-zinc-300 hover:text-white border border-white/10 rounded-md bg-white/[0.03] hover:bg-white/[0.08] btn-interactive transition-all"
                               >
                                 View feedback &rarr;
                               </button>
@@ -243,7 +246,7 @@ export const HistoryPage: React.FC = () => {
                                   <button
                                     onClick={() => handleRetryEvaluation(attempt.id)}
                                     disabled={isBusy}
-                                    className="px-2.5 py-1 text-xs font-mono text-zinc-300 border border-white/10 rounded-md hover:bg-white/[0.05] transition-colors disabled:opacity-50"
+                                    className="px-2.5 py-1 text-xs font-mono text-zinc-300 border border-white/10 rounded-md hover:bg-white/[0.05] btn-interactive transition-all disabled:opacity-50"
                                   >
                                     Retry eval
                                   </button>
@@ -251,7 +254,7 @@ export const HistoryPage: React.FC = () => {
                                 <button
                                   onClick={() => handleTryAgain(attempt.problem.id)}
                                   disabled={isBusy}
-                                  className="px-2.5 py-1 text-xs font-medium text-zinc-300 border border-white/10 rounded-md hover:bg-white/[0.05] transition-colors disabled:opacity-50"
+                                  className="px-2.5 py-1 text-xs font-medium text-zinc-300 border border-white/10 rounded-md hover:bg-white/[0.05] btn-interactive transition-all disabled:opacity-50"
                                 >
                                   Try again
                                 </button>
@@ -261,7 +264,7 @@ export const HistoryPage: React.FC = () => {
                             {isInProgress && (
                               <button
                                 onClick={() => navigate(`/practice/${attempt.id}`)}
-                                className="px-2.5 py-1 text-xs font-medium text-zinc-300 hover:text-white border border-white/10 rounded-md bg-white/[0.03] hover:bg-white/[0.08] transition-colors"
+                                className="px-2.5 py-1 text-xs font-medium text-zinc-300 hover:text-white border border-white/10 rounded-md bg-white/[0.03] hover:bg-white/[0.08] btn-interactive transition-all"
                               >
                                 Resume practice &rarr;
                               </button>
@@ -272,7 +275,7 @@ export const HistoryPage: React.FC = () => {
                               onClick={(e) => handleDeleteAttempt(attempt.id, e)}
                               disabled={isBusy}
                               title="Delete this attempt record"
-                              className="px-2 py-1 text-xs font-mono text-zinc-500 hover:text-zinc-200 hover:bg-white/10 rounded-md border border-transparent hover:border-white/10 transition-all disabled:opacity-40"
+                              className="px-2.5 py-1 text-xs font-mono text-rose-400 hover:text-rose-300 bg-rose-950/20 hover:bg-rose-950/40 border border-rose-900/30 hover:border-rose-800/50 rounded-md btn-interactive transition-all disabled:opacity-40"
                             >
                               {busyId === attempt.id ? "Deleting..." : "Delete"}
                             </button>
